@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="app_name">
+        MoneyTracker
+    </string>
+
+    <string name="text_moneytracker">
+        MoneyTracker
+    </string>
+
+    <string name="text_edit">
+        Edit
+    </string>
+
+    <string name="text_delete">
+        Delete
+    </string>
+
+    <string name="add_transaction">
+        Add Transaction
+    </string>
+
+    <string name="edit_transaction">
+        Edit Transaction
+    </string>
+
+    <string name="save_transaction">
+        Save Transaction
+    </string>
+
+    <string name="update_transaction">
+        Update Transaction
+    </string>
+
+    <string name="cancel">
+        Cancel
+    </string>
+
+    <string name="amount">
+        Amount
+    </string>
+
+    <string name="category">
+        Category
+    </string>
+
+    <string name="description">
+        Description
+    </string>
+
+    <string name="transaction_date">
+        Transaction Date
+    </string>
+
+    <string-array name="transaction_categories">
+
+        <item>Food</item>
+        <item>Transport</item>
+        <item>Shopping</item>
+        <item>Bills</item>
+        <item>Entertainment</item>
+        <item>Other</item>
+
+    </string-array>
+
+</resources>
