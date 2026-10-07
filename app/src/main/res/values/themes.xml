@@ -5,7 +5,12 @@
 
     <style
         name="Theme.MoneyTracker"
-        parent="Theme.Material3.Dark.NoActionBar">
+        parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorSecondaryContainer">@color/card_background_light</item>
+        <item name="colorOnSecondaryContainer">@color/primary_blue</item>
+        <item name="colorSurface">@color/card_background</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
 
         <item name="colorPrimary">
             @color/primary_blue
@@ -36,7 +41,7 @@
         </item>
 
         <item name="android:windowLightStatusBar">
-            false
+            @bool/light_system_bars
         </item>
 
     </style>

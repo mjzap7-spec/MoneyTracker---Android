@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -35,6 +36,8 @@ class EditTransactionFragment :
 
     private var selectedDate =
         System.currentTimeMillis()
+
+    private var populatedTransactionId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,6 +81,16 @@ class EditTransactionFragment :
             return
         }
 
+        populatedTransactionId = savedInstanceState?.getString("populatedTransactionId")
+        selectedDate = savedInstanceState?.getLong("selectedDate") ?: selectedDate
+        if (populatedTransactionId != null) updateDateText()
+        binding.cancelButton.setOnClickListener { findNavController().popBackStack() }
+        binding.amountEditText.doAfterTextChanged { binding.amountInputLayout.error = null }
+        CurrencyPicker.setup(binding.currencySpinner, savedInstanceState?.getString("currencyCode") ?: "USD") { code ->
+            binding.amountInputLayout.prefixText = code
+            binding.amountInputLayout.error = null
+            binding.amountInputLayout.helperText = getString(if (java.util.Currency.getInstance(code).defaultFractionDigits == 0) R.string.amount_hint_whole else R.string.amount_hint_decimal)
+        }
         setupCategorySpinner()
         setupDatePicker()
         setupSaveButton()
@@ -159,28 +172,7 @@ class EditTransactionFragment :
     }
 
     private fun updateDateText() {
-
-        val calendar =
-            Calendar.getInstance()
-
-        calendar.timeInMillis =
-            selectedDate
-
-        binding.dateTextView.text =
-            "Date: %02d/%02d/%04d".format(
-
-                calendar.get(
-                    Calendar.MONTH
-                ) + 1,
-
-                calendar.get(
-                    Calendar.DAY_OF_MONTH
-                ),
-
-                calendar.get(
-                    Calendar.YEAR
-                )
-            )
+        binding.dateTextView.text = java.text.SimpleDateFormat("EEE, MMM d, yyyy", java.util.Locale.getDefault()).format(java.util.Date(selectedDate))
     }
 
     private fun setupSaveButton() {
@@ -188,24 +180,14 @@ class EditTransactionFragment :
         binding.saveButton
             .setOnClickListener {
 
-                val amount =
-                    binding.amountEditText
-                        .text
-                        .toString()
-                        .trim()
-                        .toDoubleOrNull()
+                val amountCents = Money.parseCents(binding.amountEditText.text.toString(), CurrencyPicker.selected(binding.currencySpinner))
 
                 if (
-                    amount == null ||
-                    amount <= 0
+                    amountCents == null
                 ) {
 
-                    binding.errorTextView.text =
-                        "Enter a valid amount"
-
-                    binding.errorTextView
-                        .visibility =
-                        View.VISIBLE
+                    binding.amountInputLayout.error = "Enter a positive amount valid for this currency"
+                    binding.amountEditText.requestFocus()
 
                     return@setOnClickListener
                 }
@@ -233,11 +215,10 @@ class EditTransactionFragment :
                 }
 
                 val updatedTransaction =
-                    transaction.copy(
+                    transaction.copy(type = if (binding.incomeRadioButton.isChecked) "income" else "expense",
 
-                        amountCents =
-                            (amount * 100)
-                                .toLong(),
+                        amountCents = amountCents,
+                        currencyCode = CurrencyPicker.selected(binding.currencySpinner),
 
                         categoryId =
                             category,
@@ -269,6 +250,9 @@ class EditTransactionFragment :
                         viewModel.uiState
                             .collect { state ->
 
+                                binding.saveButton.setText(if (state.isLoading) R.string.saving else R.string.save_changes)
+                                binding.saveButton.isEnabled = !state.isLoading && state.transactions.isNotEmpty()
+                                binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
                                 val transaction =
                                     state.transactions
                                         .firstOrNull()
@@ -277,6 +261,7 @@ class EditTransactionFragment :
                                     state.isSuccess
                                 ) {
 
+                                    findNavController().previousBackStackEntry?.savedStateHandle?.set("successMessage", getString(R.string.transaction_updated))
                                     viewModel.resetState()
 
                                     findNavController()
@@ -297,11 +282,17 @@ class EditTransactionFragment :
                                     binding.errorTextView
                                         .visibility =
                                         View.VISIBLE
+                                } else {
+                                    binding.errorTextView.visibility = View.GONE
                                 }
 
                                 if (
-                                    transaction != null
+                                    transaction != null && populatedTransactionId != transaction.id
                                 ) {
+
+                                    populatedTransactionId = transaction.id
+                                    binding.currencySpinner.setSelection(Money.currencies.indexOf(transaction.currencyCode).coerceAtLeast(0))
+                                    binding.amountInputLayout.prefixText = transaction.currencyCode
 
                                     selectedDate =
                                         transaction
@@ -312,11 +303,7 @@ class EditTransactionFragment :
                                     binding
                                         .amountEditText
                                         .setText(
-                                            (
-                                                    transaction
-                                                        .amountCents /
-                                                            100.0
-                                                    ).toString()
+                                            Money.editable(transaction.amountCents)
                                         )
 
                                     val position =
@@ -365,6 +352,13 @@ class EditTransactionFragment :
                             }
                     }
             }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("populatedTransactionId", populatedTransactionId)
+        outState.putLong("selectedDate", selectedDate)
+        _binding?.let { outState.putString("currencyCode", CurrencyPicker.selected(it.currencySpinner)) }
     }
 
     override fun onDestroyView() {

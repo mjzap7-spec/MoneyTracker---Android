@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <string name="export_csv">Export CSV</string>
+    <string name="export_success">History exported</string>
+    <string name="export_failed">Could not export history. Please try again.</string>
+    <string name="sort_history">Sort history</string>
+    <string name="sort_hint">Sort by amount groups transactions by currency</string>
+    <string-array name="sort_options">
+        <item>Newest first</item>
+        <item>Oldest first</item>
+        <item>Highest amount first</item>
+        <item>Lowest amount first</item>
+    </string-array>
+    <string name="currency_converter">Currency converter</string>
+    <string name="rates_description">Compare currencies using the latest daily reference rates.</string>
+    <string name="from_currency">From</string>
+    <string name="to_currency">To</string>
+    <string name="swap_currencies">Swap currencies</string>
+    <string name="converted_amount">Estimated converted amount</string>
+    <string name="conversion_unavailable">—</string>
+    <string name="invalid_conversion_amount">Enter a positive amount valid for this currency</string>
+    <string name="exchange_rate_pair">1 %1$s ≈ %2$s %3$s</string>
+    <string name="refresh_rates">Refresh rates</string>
+    <string name="rates_provider">Rates by ExchangeRate-API ↗</string>
+    <string name="rates_waiting">Rates will appear here once loaded</string>
+    <string name="rates_updating">Updating rates…</string>
+    <string name="rates_unavailable">Rates unavailable. Connect to the internet and try again.</string>
+    <string name="rates_updated">Updated %1$s · daily rates</string>
+    <string name="rates_cached">Using saved rates · last updated %1$s</string>
+    <string name="saving">Saving…</string>
+    <string name="save_changes">Save changes</string>
+    <string name="filters">Filters</string>
+    <string name="filters_count">Filters (%1$d)</string>
+    <string name="welcome_back">Welcome to MoneyTracker</string>
+    <string name="create_account">Create account</string>
+    <string name="login_subtitle">Sign in to see your balance and keep track of your money.</string>
+    <string name="register_subtitle">Start with one transaction. Build a clearer picture of your money.</string>
+    <string name="sign_in">Sign in</string>
+    <string name="back_to_sign_in">Back to sign in</string>
+    <string name="email">Email address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="password_helper">Use at least 6 characters</string>
+    <string name="invalid_email">Enter a valid email address</string>
+    <string name="short_password">Use at least 6 characters</string>
+    <string name="password_mismatch">Passwords do not match</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="history">History</string>
+    <string name="history_subtitle">Find, review, and manage your transactions</string>
+    <string name="recent_activity">Recent activity</string>
+    <string name="recent_hint">Latest 3 transactions in this currency. Tap one to edit.</string>
+    <string name="view_all">View all</string>
+    <string name="dashboard_empty">No transactions in this currency yet. Add your first income or expense.</string>
+    <string name="all_dates">All dates</string>
+    <string name="all_currencies">All currencies</string>
+    <string name="choose_date">Choose date</string>
+    <string name="history_empty">No transactions yet. Add one to start tracking your money.</string>
+    <string name="history_no_matches">No matches. Try another search or reset your filters.</string>
+    <string name="history_date_label">%1$s</string>
+    <plurals name="result_count">
+        <item quantity="one">%1$d transaction</item>
+        <item quantity="other">%1$d transactions</item>
+    </plurals>
+    <string name="reset_filters">Reset filters</string>
+    <string name="search_hint">Search category or note</string>
+    <string name="all_types">All</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="delete_title">Delete transaction?</string>
+    <string name="delete_message">This will permanently remove this transaction.</string>
+    <string name="summary_all_time">All time · %1$s</string>
+    <string name="summary_period">%1$s · %2$s</string>
+    <string name="today">Today</string>
+    <string name="retry">Try again</string>
+    <string name="back">Back</string>
+    <string name="empty_day">Nothing recorded for this day yet. Tap Add transaction to get started.</string>
+    <string name="empty_filtered">No matches for this day. Try another search or reset your filters.</string>
+    <string name="transaction_count">%1$d transactions · all currencies</string>
+    <string name="amount_hint_decimal">Use up to 2 decimal places, for example 12.50</string>
+    <string name="amount_hint_whole">Enter a whole amount, for example 1200</string>
+    <string name="transaction_added">Transaction added</string>
+    <string name="transaction_updated">Changes saved</string>
+    <string name="currency">Currency</string>
+    <string name="summary_currency">Summary currency · totals are shown separately</string>
+    <string name="previous_month">Previous month</string>
+    <string name="next_month">Next month</string>
+    <string name="select_transaction_date">Select date</string>
+    <string name="calendar_date_with_transactions">%1$s, has transactions</string>
+    <string name="calendar_transaction_legend">Green dots mark dates with transactions</string>
 
     <string name="app_name">
         MoneyTracker
@@ -61,8 +148,66 @@
         <item>Shopping</item>
         <item>Bills</item>
         <item>Entertainment</item>
+        <item>Salary</item>
+        <item>Freelance</item>
+        <item>Gifts</item>
+        <item>Investments</item>
         <item>Other</item>
 
     </string-array>
 
+<string name="insights">Insights</string><string name="settings">Settings</string>
+<string name="insights_subtitle">See where your money goes, one month at a time.</string>
+<string name="settings_subtitle">Make MoneyTracker work your way.</string>
+<string name="monthly_budget">Monthly spending budget</string><string name="manage_budget">Manage budget</string>
+<string name="spending_categories">Spending by category</string><string name="preferred_currency">Preferred currency</string>
+<string name="preferred_currency_hint">Your default for summaries and new transactions. You can choose another currency for each transaction.</string>
+<string name="budget_amount">Budget amount</string>
+<string name="budget_hint">This limit repeats each month. Changes apply to every month. Saved on this device for your account.</string>
+<string name="save_budget">Save budget</string><string name="remove_budget">Remove budget</string>
+<string name="budget_saved">Budget saved</string><string name="budget_removed">Budget removed</string>
+<string name="invalid_budget">Enter a valid positive amount for this currency</string>
+<string name="appearance">Appearance</string><string name="settings_storage">Currency and budgets are saved for your account on this device.</string>
+<string name="month_totals">Income: %1$s\nSpent: %2$s\nNet: %3$s</string>
+<string name="budget_unset">Set a budget to see how much you have left this month.</string>
+<string name="budget_remaining">%1$s left of %2$s</string><string name="budget_exceeded">%1$s over your %2$s budget</string>
+<string name="category_amount">%1$s · %2$s · %3$d%%</string>
+<string name="no_month_expenses">No expenses in this currency for this month.</string>
+<string name="loading_transactions">Loading transactions…</string>
+<string-array name="theme_options"><item>Dark</item><item>Light</item><item>Use device setting</item></string-array>
+<string name="all_categories">All categories</string>
+<string name="month_filter">Month filter</string>
+<string name="default_transaction_type">New transaction type</string>
+<string name="default_type_hint">Choose the starting type. You can change it before saving.</string>
+<string name="filtered_totals">Totals</string>
+<string name="filtered_totals_title">Totals for shown transactions</string>
+<string name="filtered_totals_hint">Each currency is calculated separately. These totals follow your search and filters.</string>
+<string name="close">Close</string>
+<string-array name="month_filter_options"><item>All months</item><item>This month</item><item>Last month</item></string-array>
+<string-array name="default_type_options"><item>Expense</item><item>Income</item></string-array>
+<string name="budgets">Budgets</string><string name="budgets_subtitle">Give your spending a limit. Keep each currency separate.</string>
+<string name="budgets_empty">No budgets yet. Set a monthly limit below to get started.</string>
+<string name="budget_card_title">%1$s budget · %2$s</string><string name="budget_spent">Spent: %1$s</string>
+<string name="spending_trend">Spending comparison</string>
+<string name="trend_hint">Selected month compared with the full previous month.</string>
+<string name="trend_no_previous">No expenses in the previous month. This month: %1$s.</string>
+<string name="trend_same">Spending matches the previous month.</string>
+<string name="trend_up">%1$s more than last month (%2$d%% higher)</string>
+<string name="trend_down">%1$s less than last month (%2$d%% lower)</string>
+<string name="ai_assistant">AI assistant</string>
+<string name="ai_subtitle">Describe a transaction or understand your monthly spending.</string>
+<string name="ai_privacy">Powered by Gemini. Draft text is sent to the AI service when you tap Create draft. Explanations send only monthly totals, category totals, and your budget.</string>
+<string name="ai_currency">Default currency and explanation currency</string>
+<string name="ai_draft_title">Turn text into a draft</string>
+<string name="ai_prompt_hint">Describe one income or expense</string>
+<string name="ai_example">Spent 15 USD on lunch yesterday</string>
+<string name="ai_try_example">Use example</string>
+<string name="ai_generate">Create draft</string>
+<string name="ai_working">Thinking…</string>
+<string name="ai_review">Review transaction</string>
+<string name="ai_review_hint">AI can make mistakes. Check the details before saving.</string>
+<string name="ai_draft_summary">%1$s · %2$s\n%3$s · %4$s\n%5$s</string>
+<string name="ai_explanation_title">Understand your spending</string>
+<string name="ai_explanation_hint">Explain the selected month and suggest budgeting ideas using your recorded totals. A current month may be incomplete.</string>
+<string name="ai_explain">Explain spending and budget</string>
 </resources>

@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
+import android.util.Patterns
+import com.example.moneytracker.R
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -50,6 +53,9 @@ class RegisterFragment : Fragment() {
             savedInstanceState
         )
 
+        binding.emailEditText.doAfterTextChanged { binding.emailInputLayout.error = null }
+        binding.passwordEditText.doAfterTextChanged { binding.passwordInputLayout.error = null }
+        binding.confirmPasswordEditText.doAfterTextChanged { binding.confirmPasswordInputLayout.error = null }
         setupRegisterButton()
         setupLoginButton()
         observeUiState()
@@ -75,29 +81,23 @@ class RegisterFragment : Fragment() {
                     .text
                     .toString()
 
-            if (email.isBlank()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
-                showError(
-                    "Enter your email"
-                )
+                binding.emailInputLayout.error = getString(R.string.invalid_email)
 
                 return@setOnClickListener
             }
 
-            if (password.isBlank()) {
+            if (password.length < 6) {
 
-                showError(
-                    "Enter your password"
-                )
+                binding.passwordInputLayout.error = getString(R.string.short_password)
 
                 return@setOnClickListener
             }
 
             if (password != confirmPassword) {
 
-                showError(
-                    "Passwords do not match"
-                )
+                binding.confirmPasswordInputLayout.error = getString(R.string.password_mismatch)
 
                 return@setOnClickListener
             }
@@ -140,6 +140,7 @@ class RegisterFragment : Fragment() {
 
                 viewModel.uiState.collect { state ->
 
+                    binding.registerButton.isEnabled = !state.isLoading
                     binding.progressBar.visibility =
                         if (state.isLoading) {
                             View.VISIBLE

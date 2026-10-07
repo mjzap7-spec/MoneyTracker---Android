@@ -2,33 +2,33 @@
 
 <resources>
 
-    <color name="primary_blue">#5B7CFF</color>
+    <color name="primary_blue">#4059D8</color>
     <color name="primary_blue_dark">#4059D8</color>
 
-    <color name="screen_background">#0F1117</color>
-    <color name="card_background">#181B23</color>
-    <color name="card_background_light">#20242E</color>
+    <color name="screen_background">#F3F6FC</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_background_light">#E6ECFA</color>
 
-    <color name="text_primary">#F5F7FA</color>
-    <color name="text_secondary">#A8AFBF</color>
-    <color name="text_muted">#737B8C</color>
+    <color name="text_primary">#182338</color>
+    <color name="text_secondary">#526079</color>
+    <color name="text_muted">#65728A</color>
 
-    <color name="income_green">#38D996</color>
-    <color name="expense_red">#FF6B81</color>
-    <color name="error_red">#FF6B6B</color>
+    <color name="income_green">#117A51</color>
+    <color name="expense_red">#BE354D</color>
+    <color name="error_red">#BA3030</color>
 
     <color name="white">#FFFFFF</color>
 
-    <color name="border_light">#2B303C</color>
-    <color name="border_dark">#343A48</color>
+    <color name="border_light">#D5DDEA</color>
+    <color name="border_dark">#BCC8DA</color>
 
-    <color name="filter_background">#1B1F28</color>
-    <color name="filter_text">#A8AFBF</color>
-    <color name="filter_selected">#5B7CFF</color>
+    <color name="filter_background">#E6ECFA</color>
+    <color name="filter_text">#526079</color>
+    <color name="filter_selected">#4059D8</color>
 
-    <color name="input_background">#181B23</color>
-    <color name="input_stroke">#343A48</color>
+    <color name="input_background">#FFFFFF</color>
+    <color name="input_stroke">#BCC8DA</color>
 
-    <color name="icon_background">#242938</color>
+    <color name="icon_background">#E6ECFA</color>
 
-</resources>
+<color name="selected_tab_text">#FFFFFF</color></resources>

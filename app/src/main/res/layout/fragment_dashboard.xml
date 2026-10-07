@@ -1,458 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/screen_background"
-    android:fillViewport="true">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-        <!-- ========================================================= -->
-        <!-- HEADER -->
-        <!-- ========================================================= -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_moneytracker"
-                    android:textColor="@color/text_primary"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Track your money"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/logoutButton"
-                style="@style/SecondaryButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Logout" />
-
-        </LinearLayout>
-
-
-        <!-- ========================================================= -->
-        <!-- SUMMARY -->
-        <!-- ========================================================= -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="Summary"
-            android:textColor="@color/text_primary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/summaryToggleGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:singleSelection="true"
-            app:selectionRequired="true">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/monthlyButton"
-                style="@style/SecondaryButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Monthly" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/yearlyButton"
-                style="@style/SecondaryButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Yearly" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/allTimeButton"
-                style="@style/SecondaryButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="All Time" />
-
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
-
-        <!-- ========================================================= -->
-        <!-- INCOME / EXPENSE / BALANCE -->
-        <!-- ========================================================= -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
-            <!-- Income -->
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/card_background"
-                app:cardCornerRadius="18dp"
-                app:strokeColor="@color/border_dark"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Income"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/incomeTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="$0.00"
-                        android:textColor="@color/income_green"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-
-            <!-- Expense -->
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/card_background"
-                app:cardCornerRadius="18dp"
-                app:strokeColor="@color/border_dark"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Expense"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/expenseTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="$0.00"
-                        android:textColor="@color/expense_red"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-
-            <!-- Balance -->
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/card_background"
-                app:cardCornerRadius="18dp"
-                app:strokeColor="@color/border_dark"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Balance"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/balanceTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="$0.00"
-                        android:textColor="@color/text_primary"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
-
-        <!-- ========================================================= -->
-        <!-- DATE -->
-        <!-- ========================================================= -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Selected Date"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/selectedDateTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Transactions for today"
-                    android:textColor="@color/text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/calendarButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Select date"
-                android:padding="10dp"
-                android:src="@android:drawable/ic_menu_my_calendar"
-                android:tint="@color/primary_blue" />
-
-        </LinearLayout>
-
-
-        <!-- ========================================================= -->
-        <!-- QUICK TRANSACTION DATES -->
-        <!-- ========================================================= -->
-
-        <HorizontalScrollView
-            android:id="@+id/transactionDatesScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:id="@+id/transactionDatesContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
-
-
-        <!-- ========================================================= -->
-        <!-- SEARCH -->
-        <!-- ========================================================= -->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/searchInputLayout"
-            style="@style/SearchInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Search transactions">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/searchEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_muted" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <!-- ========================================================= -->
-        <!-- TYPE FILTER -->
-        <!-- ========================================================= -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Transaction Type"
-            android:textColor="@color/text_secondary"
-            android:textSize="13sp" />
-
-        <RadioGroup
-            android:id="@+id/typeRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/allRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="All"
-                android:textColor="@color/text_primary" />
-
-            <RadioButton
-                android:id="@+id/incomeRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="Income"
-                android:textColor="@color/text_primary" />
-
-            <RadioButton
-                android:id="@+id/expenseRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="Expense"
-                android:textColor="@color/text_primary" />
-
-        </RadioGroup>
-
-
-        <!-- ========================================================= -->
-        <!-- CLEAR FILTERS -->
-        <!-- ========================================================= -->
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/clearFiltersButton"
-            style="@style/SecondaryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Clear Filters" />
-
-
-        <!-- ========================================================= -->
-        <!-- TRANSACTIONS TITLE -->
-        <!-- ========================================================= -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="Transactions"
-            android:textColor="@color/text_primary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-
-        <!-- ========================================================= -->
-        <!-- PROGRESS -->
-        <!-- ========================================================= -->
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:visibility="gone" />
-
-
-        <!-- ========================================================= -->
-        <!-- EMPTY -->
-        <!-- ========================================================= -->
-
-        <TextView
-            android:id="@+id/emptyTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="No transactions found"
-            android:textColor="@color/text_muted"
-            android:textSize="15sp"
-            android:visibility="gone" />
-
-
-        <!-- ========================================================= -->
-        <!-- TRANSACTION LIST -->
-        <!-- ========================================================= -->
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/transactionRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:nestedScrollingEnabled="false" />
-
-
-        <!-- ========================================================= -->
-        <!-- ADD TRANSACTION -->
-        <!-- ========================================================= -->
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/addTransactionButton"
-            style="@style/PrimaryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="Add Transaction" />
-
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/screen_background" android:fillViewport="true" android:scrollbars="none">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+    <!-- ========================================================= -->
+    <!-- HEADER -->
+    <!-- ========================================================= -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+      <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/dashboard" android:textColor="@color/text_primary" android:textSize="28sp" android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Your money, at a glance" android:textColor="@color/text_secondary" android:textSize="14sp" />
+      </LinearLayout>
+      <com.google.android.material.button.MaterialButton android:id="@+id/helpButton" style="@style/QuietButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/help_title" />
     </LinearLayout>
-
+    <!-- ========================================================= -->
+    <!-- SUMMARY -->
+    <!-- ========================================================= -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginTop="20dp">
+      <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="0dp" android:text="Summary" android:textColor="@color/text_primary" android:textSize="20sp" android:textStyle="bold" android:layout_weight="1" />
+      <Spinner android:id="@+id/summaryCurrencySpinner" android:layout_width="110dp" android:layout_height="48dp" android:layout_marginTop="0dp" android:background="@drawable/bg_spinner" android:paddingStart="14dp" android:paddingEnd="40dp" android:contentDescription="@string/currency" />
+    </LinearLayout>
+    <TextView android:id="@+id/summaryPeriodTextView" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textColor="@color/text_secondary" android:textSize="14sp" />
+    <com.google.android.material.button.MaterialButtonToggleGroup android:id="@+id/summaryToggleGroup" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" app:singleSelection="true" app:selectionRequired="true">
+      <com.google.android.material.button.MaterialButton android:id="@+id/monthlyButton" style="@style/SummaryTab" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Monthly" />
+      <com.google.android.material.button.MaterialButton android:id="@+id/yearlyButton" style="@style/SummaryTab" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Yearly" />
+      <com.google.android.material.button.MaterialButton android:id="@+id/allTimeButton" style="@style/SummaryTab" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="All Time" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+    <!-- ========================================================= -->
+    <!-- INCOME / EXPENSE / BALANCE -->
+    <!-- ========================================================= -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="vertical">
+      <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" app:cardBackgroundColor="@color/card_background_light" app:cardCornerRadius="18dp" app:strokeColor="@color/primary_blue" app:strokeWidth="1dp" android:layout_marginBottom="12dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Balance" android:textColor="@color/text_secondary" android:textSize="14sp" />
+          <TextView android:id="@+id/balanceTextView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="$0.00" android:textColor="@color/text_primary" android:textSize="34sp" android:textStyle="bold" />
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+      <!-- Income -->
+      <!-- Expense -->
+      <!-- Balance -->
+      <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+        <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginBottom="10dp" app:cardBackgroundColor="@color/card_background" app:cardCornerRadius="18dp" app:strokeColor="@color/border_dark" app:strokeWidth="1dp" android:layout_weight="1" app:cardElevation="0dp" android:layout_marginEnd="6dp">
+          <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Income" android:textColor="@color/text_secondary" android:textSize="14sp" />
+            <TextView android:id="@+id/incomeTextView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="$0.00" android:textColor="@color/income_green" android:textSize="25sp" android:textStyle="bold" />
+          </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginBottom="10dp" app:cardBackgroundColor="@color/card_background" app:cardCornerRadius="18dp" app:strokeColor="@color/border_dark" app:strokeWidth="1dp" android:layout_weight="1" app:cardElevation="0dp" android:layout_marginStart="6dp">
+          <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Expense" android:textColor="@color/text_secondary" android:textSize="14sp" />
+            <TextView android:id="@+id/expenseTextView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="$0.00" android:textColor="@color/expense_red" android:textSize="25sp" android:textStyle="bold" />
+          </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+      </LinearLayout>
+    </LinearLayout>
+    <com.google.android.material.button.MaterialButton android:id="@+id/addTransactionButton" style="@style/PrimaryButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:layout_marginBottom="0dp" android:text="+ Add transaction" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="8dp">
+    <com.google.android.material.button.MaterialButton android:id="@+id/currencyConverterButton" style="@style/SecondaryButton" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:layout_marginEnd="4dp" android:text="@string/convert_short" />
+    <com.google.android.material.button.MaterialButton style="@style/SecondaryButton" android:id="@+id/assistantButton" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:layout_marginStart="4dp" android:text="@string/ai_assistant" />
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+      <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginTop="24dp">
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/recent_activity" android:textSize="20sp" android:textStyle="bold" android:textColor="@color/text_primary" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/viewHistoryButton" style="@style/QuietButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/view_all" />
+      </LinearLayout>
+      <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="@string/recent_hint" android:textColor="@color/text_secondary" android:textSize="13sp" />
+      <ProgressBar android:id="@+id/progressBar" android:layout_width="32dp" android:layout_height="32dp" android:layout_gravity="center" android:layout_marginTop="16dp" android:visibility="gone" />
+      <TextView android:id="@+id/errorTextView" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:textColor="@color/error_red" android:accessibilityLiveRegion="polite" android:visibility="gone" />
+      <com.google.android.material.button.MaterialButton android:id="@+id/retryButton" style="@style/SecondaryButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/retry" android:visibility="gone" />
+      <TextView android:id="@+id/emptyTextView" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:padding="24dp" android:gravity="center" android:text="@string/dashboard_empty" android:textColor="@color/text_secondary" android:background="@drawable/bg_transaction_card" android:visibility="gone" />
+      <androidx.recyclerview.widget.RecyclerView android:id="@+id/transactionRecyclerView" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:nestedScrollingEnabled="false" />
+    </LinearLayout>
+  </LinearLayout>
 </androidx.core.widget.NestedScrollView>

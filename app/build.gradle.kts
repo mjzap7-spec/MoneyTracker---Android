@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.core:core-splashscreen:1.2.0")
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
@@ -49,6 +50,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-ai")
     implementation("androidx.fragment:fragment-ktx:1.8.9")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)

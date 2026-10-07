@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
+import android.util.Patterns
+import com.example.moneytracker.R
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 
@@ -51,6 +53,8 @@ class LoginFragment : Fragment() {
             savedInstanceState
         )
 
+        binding.emailEditText.doAfterTextChanged { binding.emailInputLayout.error = null }
+        binding.passwordEditText.doAfterTextChanged { binding.passwordInputLayout.error = null }
         binding.loginButton.setOnClickListener {
 
             val email =
@@ -64,24 +68,16 @@ class LoginFragment : Fragment() {
                     .text
                     .toString()
 
-            if (email.isBlank()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
-                binding.errorTextView.text =
-                    "Enter your email"
-
-                binding.errorTextView.visibility =
-                    View.VISIBLE
+                binding.emailInputLayout.error = getString(R.string.invalid_email)
 
                 return@setOnClickListener
             }
 
             if (password.isBlank()) {
 
-                binding.errorTextView.text =
-                    "Enter your password"
-
-                binding.errorTextView.visibility =
-                    View.VISIBLE
+                binding.passwordInputLayout.error = "Enter your password"
 
                 return@setOnClickListener
             }
@@ -112,6 +108,7 @@ class LoginFragment : Fragment() {
 
                 viewModel.uiState.collect { state ->
 
+                    binding.loginButton.isEnabled = !state.isLoading
                     binding.progressBar.visibility =
                         if (state.isLoading) {
                             View.VISIBLE

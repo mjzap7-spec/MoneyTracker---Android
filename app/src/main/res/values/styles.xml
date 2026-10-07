@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <style name="SummaryTab" parent="SecondaryButton">
+        <item name="backgroundTint">@color/summary_tab_background</item>
+        <item name="android:textColor">@color/summary_tab_text</item>
+        <item name="strokeColor">@color/summary_tab_stroke</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <!-- ========================= -->
     <!-- Primary Button             -->
@@ -39,7 +45,7 @@
         name="SecondaryButton"
         parent="Widget.Material3.Button">
 
-        <item name="android:minHeight">46dp</item>
+        <item name="android:minHeight">48dp</item>
 
         <item name="android:textAllCaps">false</item>
 
@@ -72,7 +78,7 @@
         name="DeleteButton"
         parent="Widget.Material3.Button">
 
-        <item name="android:minHeight">46dp</item>
+        <item name="android:minHeight">48dp</item>
 
         <item name="android:textAllCaps">false</item>
 
@@ -177,4 +183,11 @@
 
     </style>
 
+    <style name="QuietButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:textColor">@color/primary_blue</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
 </resources>

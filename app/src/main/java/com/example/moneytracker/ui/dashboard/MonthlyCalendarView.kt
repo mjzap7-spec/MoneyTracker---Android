@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.moneytracker.R
@@ -23,6 +24,20 @@ class MonthlyCalendarView(
 
     private var onDateSelected:
             ((Calendar) -> Unit)? = null
+
+    private var transactionDays = emptySet<Pair<Int, Int>>()
+
+    fun setTransactionDates(dates: List<Long>) {
+        val days = dates.map { millis ->
+            Calendar.getInstance().apply { timeInMillis = millis }.let {
+                it.get(Calendar.YEAR) to it.get(Calendar.DAY_OF_YEAR)
+            }
+        }.toSet()
+        if (days != transactionDays) {
+            transactionDays = days
+            buildCalendar()
+        }
+    }
 
     init {
 
@@ -94,6 +109,7 @@ class MonthlyCalendarView(
 
         removeAllViews()
 
+        addMonthHeader()
         addWeekHeader()
 
         val firstDay =
@@ -164,6 +180,37 @@ class MonthlyCalendarView(
 
             addView(weekRow)
         }
+    }
+
+    private fun addMonthHeader() {
+        val row = LinearLayout(context).apply {
+            gravity = Gravity.CENTER_VERTICAL
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 56.dp())
+        }
+        fun navigationButton(label: String, description: String, offset: Int) =
+            TextView(context).apply {
+                text = label
+                textSize = 24f
+                gravity = Gravity.CENTER
+                setTextColor(context.getColor(R.color.primary_blue))
+                contentDescription = description
+                layoutParams = LayoutParams(48.dp(), 48.dp())
+                isFocusable = true
+                setOnClickListener {
+                    currentMonth.add(Calendar.MONTH, offset)
+                    buildCalendar()
+                }
+            }
+        row.addView(navigationButton("‹", context.getString(R.string.previous_month), -1))
+        row.addView(TextView(context).apply {
+            text = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(currentMonth.time)
+            textSize = 18f
+            gravity = Gravity.CENTER
+            setTextColor(context.getColor(R.color.text_primary))
+            layoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f)
+        })
+        row.addView(navigationButton("›", context.getString(R.string.next_month), 1))
+        addView(row)
     }
 
     private fun addWeekHeader() {
@@ -344,6 +391,19 @@ class MonthlyCalendarView(
         container.addView(
             dayText
         )
+
+        val hasTransactions = (calendar.get(Calendar.YEAR) to
+            calendar.get(Calendar.DAY_OF_YEAR)) in transactionDays
+        container.addView(View(context).apply {
+            layoutParams = LayoutParams(5.dp(), 5.dp()).apply { topMargin = 3.dp() }
+            background = createCircleBackground(R.color.income_green)
+            visibility = if (hasTransactions) View.VISIBLE else View.INVISIBLE
+        })
+        val dateLabel = SimpleDateFormat("EEEE, MMMM d, yyyy", Locale.getDefault())
+            .format(calendar.time)
+        container.contentDescription = if (hasTransactions)
+            context.getString(R.string.calendar_date_with_transactions, dateLabel) else dateLabel
+        container.isFocusable = true
 
         container.setOnClickListener {
 

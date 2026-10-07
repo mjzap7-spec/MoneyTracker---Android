@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CancellationException
 import java.util.Calendar
 
 class TransactionViewModel : ViewModel() {
@@ -18,6 +19,8 @@ class TransactionViewModel : ViewModel() {
     private var allTransactions:
             List<Transaction> =
         emptyList()
+
+    private val deletingIds = mutableSetOf<String>()
 
     private var selectedType =
         "all"
@@ -44,7 +47,13 @@ class TransactionViewModel : ViewModel() {
         }
 
     private var summaryMode =
-        "monthly"
+        "all"
+
+    fun selectSummaryCurrency(code: String) {
+        if (code !in Money.currencies) return
+        _uiState.value = _uiState.value.copy(summaryCurrencyCode = code)
+        applyFilters()
+    }
 
     private val _uiState =
         MutableStateFlow(
@@ -60,6 +69,9 @@ class TransactionViewModel : ViewModel() {
     ) {
 
         viewModelScope.launch {
+            if (_uiState.value.isLoading) return@launch
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+
 
             _uiState.value =
                 TransactionUiState(
@@ -78,6 +90,7 @@ class TransactionViewModel : ViewModel() {
                     )
 
             } catch (e: Exception) {
+                if (e is CancellationException) throw e
 
                 _uiState.value =
                     TransactionUiState(
@@ -92,6 +105,7 @@ class TransactionViewModel : ViewModel() {
     fun loadTransactions() {
 
         viewModelScope.launch {
+            if (_uiState.value.isLoading) return@launch
 
             _uiState.value =
                 _uiState.value.copy(
@@ -110,16 +124,17 @@ class TransactionViewModel : ViewModel() {
 
                 updateTransactionDates()
 
+                _uiState.value = _uiState.value.copy(isLoading = false)
                 applyFilters()
 
             } catch (e: Exception) {
+                if (e is CancellationException) throw e
 
                 _uiState.value =
                     _uiState.value.copy(
                         isLoading = false,
                         errorMessage =
-                            e.message
-                                ?: "Unable to load transactions"
+                            "We couldn't load your transactions. Please try again."
                     )
             }
         }
@@ -130,6 +145,9 @@ class TransactionViewModel : ViewModel() {
     ) {
 
         viewModelScope.launch {
+            if (_uiState.value.isLoading) return@launch
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+
 
             try {
 
@@ -145,6 +163,7 @@ class TransactionViewModel : ViewModel() {
                     )
 
             } catch (e: Exception) {
+                if (e is CancellationException) throw e
 
                 _uiState.value =
                     TransactionUiState(
@@ -161,6 +180,9 @@ class TransactionViewModel : ViewModel() {
     ) {
 
         viewModelScope.launch {
+            if (_uiState.value.isLoading) return@launch
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+
 
             try {
 
@@ -174,9 +196,10 @@ class TransactionViewModel : ViewModel() {
                     )
 
             } catch (e: Exception) {
+                if (e is CancellationException) throw e
 
                 _uiState.value =
-                    TransactionUiState(
+                    _uiState.value.copy(isLoading = false,
                         errorMessage =
                             e.message
                                 ?: "Unable to update transaction"
@@ -190,6 +213,7 @@ class TransactionViewModel : ViewModel() {
     ) {
 
         viewModelScope.launch {
+            if (!deletingIds.add(transactionId)) return@launch
 
             try {
 
@@ -197,16 +221,20 @@ class TransactionViewModel : ViewModel() {
                     transactionId
                 )
 
-                loadTransactions()
+                allTransactions = allTransactions.filterNot { it.id == transactionId }
+                updateTransactionDates()
+                applyFilters()
 
             } catch (e: Exception) {
+                if (e is CancellationException) throw e
 
                 _uiState.value =
                     _uiState.value.copy(
                         errorMessage =
-                            e.message
-                                ?: "Unable to delete transaction"
+                            "We couldn't delete this transaction. Please try again."
                     )
+            } finally {
+                deletingIds.remove(transactionId)
             }
         }
     }
@@ -237,6 +265,7 @@ class TransactionViewModel : ViewModel() {
         month: Int,
         day: Int
     ) {
+        _uiState.value = _uiState.value.copy(allDates = false, monthFilterMillis = null)
 
         selectedDate =
             Calendar.getInstance().apply {
@@ -305,12 +334,13 @@ class TransactionViewModel : ViewModel() {
     }
 
     fun clearFilters() {
+        _uiState.value = _uiState.value.copy(allDates = true, listCurrencyCode = null, categoryFilter = null, monthFilterMillis = null)
 
         selectedType =
             "all"
 
         summaryMode =
-            "monthly"
+            "all"
 
         selectedDate =
             Calendar.getInstance().apply {
@@ -343,6 +373,35 @@ class TransactionViewModel : ViewModel() {
 
         applyFilters()
     }
+
+    fun selectedDateMillis(): Long = selectedDate.timeInMillis
+    fun showAllDates() {
+        _uiState.value = _uiState.value.copy(allDates = true, monthFilterMillis = null)
+        applyFilters()
+    }
+
+    fun filterByMonth(monthMillis: Long?) {
+        _uiState.value = _uiState.value.copy(allDates = true, monthFilterMillis = monthMillis)
+        applyFilters()
+    }
+
+    fun filterByCategory(category: String?) {
+        _uiState.value = _uiState.value.copy(categoryFilter = category)
+        applyFilters()
+    }
+
+    fun filterByCurrency(code: String?) {
+        _uiState.value = _uiState.value.copy(listCurrencyCode = code)
+        applyFilters()
+    }
+
+    fun sortBy(order: String) {
+        if (order !in TransactionFilters.sortOrders) return
+        _uiState.value = _uiState.value.copy(sortOrder = order)
+        applyFilters()
+    }
+    fun selectedType(): String = selectedType
+    fun summaryMode(): String = summaryMode
 
     private fun updateTransactionDates() {
 
@@ -391,44 +450,15 @@ class TransactionViewModel : ViewModel() {
 
     private fun applyFilters() {
 
-        var filteredTransactions =
-            allTransactions.filter {
-
-                isSameDay(
-                    it.transactionDate,
-                    selectedDate
-                )
-            }
-
-        if (selectedType != "all") {
-
-            filteredTransactions =
-                filteredTransactions.filter {
-                    it.type == selectedType
-                }
-        }
-
-        val query =
-            _uiState.value
-                .searchQuery
-                .trim()
-
-        if (query.isNotBlank()) {
-
-            filteredTransactions =
-                filteredTransactions.filter {
-
-                    it.categoryId.contains(
-                        query,
-                        ignoreCase = true
-                    ) ||
-                            it.description.contains(
-                                query,
-                                ignoreCase = true
-                            )
-                }
-        }
-
+        val filteredTransactions = TransactionFilters.apply(
+            allTransactions,
+            selectedDateMillis = if (_uiState.value.allDates) null else selectedDate.timeInMillis,
+            type = selectedType,
+            currencyCode = _uiState.value.listCurrencyCode,
+            query = _uiState.value.searchQuery,
+            category = _uiState.value.categoryFilter,
+            monthMillis = _uiState.value.monthFilterMillis
+        )
         val summaryTransactions =
             when (summaryMode) {
 
@@ -463,7 +493,7 @@ class TransactionViewModel : ViewModel() {
         val totalIncomeCents =
             summaryTransactions
                 .filter {
-                    it.type == "income"
+                    it.type == "income" && it.currencyCode == _uiState.value.summaryCurrencyCode
                 }
                 .sumOf {
                     it.amountCents
@@ -472,7 +502,7 @@ class TransactionViewModel : ViewModel() {
         val totalExpenseCents =
             summaryTransactions
                 .filter {
-                    it.type == "expense"
+                    it.type == "expense" && it.currencyCode == _uiState.value.summaryCurrencyCode
                 }
                 .sumOf {
                     it.amountCents
@@ -481,10 +511,8 @@ class TransactionViewModel : ViewModel() {
         _uiState.value =
             _uiState.value.copy(
 
-                isLoading = false,
-
                 transactions =
-                    filteredTransactions,
+                    TransactionFilters.sort(filteredTransactions, _uiState.value.sortOrder),
 
                 totalIncomeCents =
                     totalIncomeCents,

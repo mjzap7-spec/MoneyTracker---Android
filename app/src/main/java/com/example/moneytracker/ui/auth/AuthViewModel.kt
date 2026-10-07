@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CancellationException
 
 class AuthViewModel : ViewModel() {
 
@@ -27,6 +28,7 @@ class AuthViewModel : ViewModel() {
     ) {
 
         viewModelScope.launch {
+            if (_uiState.value.isLoading) return@launch
 
             _uiState.value =
                 AuthUiState(
@@ -46,6 +48,7 @@ class AuthViewModel : ViewModel() {
                     )
 
             } catch (e: Exception) {
+                if (e is CancellationException) throw e
 
                 _uiState.value =
                     AuthUiState(
@@ -63,6 +66,7 @@ class AuthViewModel : ViewModel() {
     ) {
 
         viewModelScope.launch {
+            if (_uiState.value.isLoading) return@launch
 
             _uiState.value =
                 AuthUiState(
@@ -82,6 +86,7 @@ class AuthViewModel : ViewModel() {
                     )
 
             } catch (e: Exception) {
+                if (e is CancellationException) throw e
 
                 _uiState.value =
                     AuthUiState(

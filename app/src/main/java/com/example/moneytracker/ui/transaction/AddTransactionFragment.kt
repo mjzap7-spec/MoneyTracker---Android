@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -61,7 +62,25 @@ class AddTransactionFragment :
             savedInstanceState
         )
 
+        selectedDate = savedInstanceState?.getLong("selectedDate") ?: arguments?.getLong("selectedDate") ?: selectedDate
+        binding.cancelButton.setOnClickListener { findNavController().popBackStack() }
+        if (savedInstanceState == null) {
+            binding.typeRadioGroup.check(if ((arguments?.getString("draftType") ?: com.example.moneytracker.data.repository.AppPreferences(requireContext()).transactionType()) == "income")
+                R.id.incomeRadioButton else R.id.expenseRadioButton)
+        }
+        binding.amountEditText.doAfterTextChanged { binding.amountInputLayout.error = null }
+        CurrencyPicker.setup(binding.currencySpinner, savedInstanceState?.getString("currencyCode") ?: arguments?.getString("currencyCode") ?: com.example.moneytracker.data.repository.AppPreferences(requireContext()).currency()) { code ->
+            binding.amountInputLayout.prefixText = code
+            binding.amountInputLayout.error = null
+            binding.amountInputLayout.helperText = getString(if (java.util.Currency.getInstance(code).defaultFractionDigits == 0) R.string.amount_hint_whole else R.string.amount_hint_decimal)
+        }
         setupCategorySpinner()
+        if (savedInstanceState == null && arguments?.containsKey("draftAmount") == true) {
+            binding.amountEditText.setText(Money.editable(requireArguments().getLong("draftAmount")))
+            binding.descriptionEditText.setText(arguments?.getString("draftNote").orEmpty())
+            val categories = resources.getStringArray(R.array.transaction_categories)
+            binding.categorySpinner.setSelection(categories.indexOf(arguments?.getString("draftCategory")).coerceAtLeast(0))
+        }
         setupDate()
         setupAddButton()
         observeUiState()
@@ -139,28 +158,7 @@ class AddTransactionFragment :
     }
 
     private fun updateDateText() {
-
-        val calendar =
-            Calendar.getInstance()
-
-        calendar.timeInMillis =
-            selectedDate
-
-        binding.dateTextView.text =
-            "%02d/%02d/%04d".format(
-
-                calendar.get(
-                    Calendar.MONTH
-                ) + 1,
-
-                calendar.get(
-                    Calendar.DAY_OF_MONTH
-                ),
-
-                calendar.get(
-                    Calendar.YEAR
-                )
-            )
+        binding.dateTextView.text = java.text.SimpleDateFormat("EEE, MMM d, yyyy", java.util.Locale.getDefault()).format(java.util.Date(selectedDate))
     }
 
     private fun setupAddButton() {
@@ -172,24 +170,14 @@ class AddTransactionFragment :
                     .visibility =
                     View.GONE
 
-                val amount =
-                    binding.amountEditText
-                        .text
-                        .toString()
-                        .trim()
-                        .toDoubleOrNull()
+                val amountCents = Money.parseCents(binding.amountEditText.text.toString(), CurrencyPicker.selected(binding.currencySpinner))
 
                 if (
-                    amount == null ||
-                    amount <= 0
+                    amountCents == null
                 ) {
 
-                    binding.errorTextView.text =
-                        "Enter a valid amount"
-
-                    binding.errorTextView
-                        .visibility =
-                        View.VISIBLE
+                    binding.amountInputLayout.error = "Enter a positive amount valid for this currency"
+                    binding.amountEditText.requestFocus()
 
                     return@setOnClickListener
                 }
@@ -222,9 +210,8 @@ class AddTransactionFragment :
 
                         type = type,
 
-                        amountCents =
-                            (amount * 100)
-                                .toLong(),
+                        amountCents = amountCents,
+                        currencyCode = CurrencyPicker.selected(binding.currencySpinner),
 
                         categoryId =
                             category,
@@ -259,6 +246,8 @@ class AddTransactionFragment :
                         viewModel.uiState
                             .collect { state ->
 
+                                binding.addTransactionButton.setText(if (state.isLoading) R.string.saving else R.string.add_transaction)
+                                binding.addTransactionButton.isEnabled = !state.isLoading
                                 binding.progressBar
                                     .visibility =
                                     if (
@@ -293,6 +282,7 @@ class AddTransactionFragment :
                                     state.isSuccess
                                 ) {
 
+                                    findNavController().previousBackStackEntry?.savedStateHandle?.set("successMessage", getString(R.string.transaction_added))
                                     viewModel.resetState()
 
                                     findNavController()
@@ -301,6 +291,12 @@ class AddTransactionFragment :
                             }
                     }
             }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong("selectedDate", selectedDate)
+        _binding?.let { outState.putString("currencyCode", CurrencyPicker.selected(it.currencySpinner)) }
     }
 
     override fun onDestroyView() {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true" android:background="@color/screen_background" android:scrollbars="none" android:focusableInTouchMode="true">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+    <TextView android:id="@+id/title" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:layout_marginTop="0dp" android:text="@string/settings" android:textSize="28sp" android:textColor="@color/text_primary" android:textStyle="bold" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/helpButton" style="@style/QuietButton" android:layout_width="wrap_content" android:layout_height="wrap_content"  android:text="@string/help_title" />
+    </LinearLayout>
+    <TextView android:id="@+id/subtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="@string/settings_subtitle" android:textSize="14sp" android:textColor="@color/text_secondary" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp" android:layout_marginTop="16dp" android:background="@drawable/bg_section_card">
+      <TextView android:id="@+id/currencyLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="0dp" android:text="@string/preferred_currency" android:textSize="18sp" android:textColor="@color/text_primary" android:textStyle="bold" />
+      <Spinner android:id="@+id/currencySpinner" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_spinner" android:layout_marginTop="8dp" android:paddingStart="12dp" android:paddingEnd="40dp" android:contentDescription="@string/currency" />
+      <TextView android:id="@+id/currencyHint" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/preferred_currency_hint" android:textSize="13sp" android:textColor="@color/text_secondary" android:lineSpacingExtra="3dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp" android:layout_marginTop="16dp" android:background="@drawable/bg_section_card">
+      <TextView android:id="@+id/budgetTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="0dp" android:text="@string/monthly_budget" android:textSize="18sp" android:textColor="@color/text_primary" android:textStyle="bold" />
+      <TextView android:id="@+id/budgetHint" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/budget_hint" android:textSize="13sp" android:textColor="@color/text_secondary" android:lineSpacingExtra="3dp" />
+      <com.google.android.material.button.MaterialButton style="@style/SecondaryButton" android:id="@+id/manageBudgetsButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/manage_budget" android:layout_marginTop="8dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp" android:layout_marginTop="16dp" android:background="@drawable/bg_section_card">
+      <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/default_transaction_type" android:textSize="18sp" android:textStyle="bold" android:textColor="@color/text_primary" />
+      <Spinner android:id="@+id/defaultTypeSpinner" android:layout_width="match_parent" android:layout_height="48dp" android:layout_marginTop="8dp" android:background="@drawable/bg_spinner" android:paddingStart="12dp" android:paddingEnd="40dp" android:contentDescription="@string/default_transaction_type" />
+      <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/default_type_hint" android:textSize="13sp" android:textColor="@color/text_secondary" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp" android:layout_marginTop="16dp" android:background="@drawable/bg_section_card">
+      <TextView android:id="@+id/themeLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="0dp" android:text="@string/appearance" android:textSize="18sp" android:textColor="@color/text_primary" android:textStyle="bold" />
+      <Spinner android:id="@+id/themeSpinner" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_spinner" android:layout_marginTop="8dp" android:paddingStart="12dp" android:paddingEnd="40dp" android:contentDescription="@string/appearance" />
+    </LinearLayout>
+    <TextView android:id="@+id/privacyLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/settings_storage" android:textSize="13sp" android:textColor="@color/text_secondary" android:lineSpacingExtra="3dp" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/logoutButton" style="@style/QuietButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="@string/sign_out" />
+  </LinearLayout>
+</ScrollView>

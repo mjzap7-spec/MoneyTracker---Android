@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help_title">Help</string>
+    <string name="help_back">Back</string>
+    <string name="help_subtitle">A little guidance for your everyday money tracking. Tap a topic to learn more.</string>
+    <string name="help_expanded">Expanded. Tap to close.</string>
+    <string name="help_collapsed">Collapsed. Tap to read.</string>
+    <string-array name="help_questions">
+        <item>How do I add a transaction?</item>
+        <item>What does the Dashboard show?</item>
+        <item>How do I find or change a transaction?</item>
+        <item>How do spending insights work?</item>
+        <item>How do I set a budget?</item>
+        <item>How do currencies and conversion work?</item>
+        <item>What can the AI assistant do?</item>
+        <item>How do I personalize the app?</item>
+    </string-array>
+    <string-array name="help_answers">
+        <item>Tap Add transaction on the Dashboard. Choose Income or Expense, enter a positive amount, and choose its currency, category and date. Add a note if you like, then tap Save.\n\nEach transaction keeps the currency you choose.</item>
+        <item>The Dashboard shows income, expenses and balance for the selected currency. Balance is income minus expenses.\n\nAll Time is the default. Monthly shows the current month; Yearly shows the current year. Recent activity gives you a quick way to open your latest records.</item>
+        <item>Open History and search by note or category. Expand the filters to narrow the list by type, date, month, currency or category. A dot below a calendar date means that day has transactions.\n\nTap a transaction to edit it. Deleting requires confirmation. Totals and CSV export use the filtered results, with currencies kept separate.</item>
+        <item>Open Insights, choose a month and currency, and see income, expenses, balance and your spending by category.\n\nThe previous-month comparison uses the whole previous month. A month still in progress may have less spending simply because it is not finished yet.</item>
+        <item>Open Manage budget from Settings or Insights. Set a monthly spending limit for each currency you use. The same limit applies every month until you change it.\n\nProgress shows expenses against that limit, including how much is left or over budget. Budget settings are saved on this device for your account.</item>
+        <item>Choose the currency when adding each transaction. Dashboard and Insights totals show one currency at a time.\n\nOpen Currency converter on the Dashboard for exchange rates and estimated conversions. Check its update status to see how recent the rates are. Conversion does not change your saved transactions.</item>
+        <item>Describe one transaction, such as “Spent 15 USD on lunch yesterday”, then tap Create draft. Review the amount, currency, category and date before saving. AI can make mistakes.\n\nFor spending explanations, select a month and currency. The assistant uses spending totals and your budget; individual transaction notes are not included. Your request is sent to the AI service.\n\nAI needs an internet connection and Firebase AI Logic enabled for this app. If it is unavailable, check your connection and try again. The app owner may need to finish service setup.</item>
+        <item>Settings lets you choose a preferred currency, a default transaction type, and Light, Dark or System appearance.\n\nThe preferred currency helps fill new forms; existing transactions keep their own currencies. Budget and default preferences are stored on this device.</item>
+    </string-array>
+</resources>

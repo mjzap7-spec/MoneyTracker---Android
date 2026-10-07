@@ -1,0 +1,8 @@
+<resources>
+    <string name="convert_short">Convert currency</string>
+    <string name="explain_spending_action">Explain my spending</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_question">Sign out of your account?</string>
+    <string name="sign_out_hint">You can sign in again to see your transactions.</string>
+    <string name="stay_signed_in">Stay signed in</string>
+</resources>

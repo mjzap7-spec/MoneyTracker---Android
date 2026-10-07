@@ -7,5 +7,6 @@ data class Transaction(
     val categoryId: String = "",
     val description: String = "",
     val transactionDate: Long = 0L,
-    val createdAt: Long = 0L
+    val createdAt: Long = 0L,
+    val currencyCode: String = "USD"
 )

@@ -7,6 +7,19 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
 
+    <fragment android:id="@+id/currencyFragment"
+        android:name="com.example.moneytracker.ui.currency.CurrencyFragment"
+        android:label="Exchange rates" tools:layout="@layout/fragment_currency" />
+
+    <fragment android:id="@+id/insightsFragment" android:name="com.example.moneytracker.ui.insights.InsightsFragment" android:label="Insights" tools:layout="@layout/fragment_insights" />
+    <fragment android:id="@+id/settingsFragment" android:name="com.example.moneytracker.ui.settings.SettingsFragment" android:label="Settings" tools:layout="@layout/fragment_settings" />
+    <action android:id="@+id/action_logout" app:destination="@id/loginFragment"
+        app:popUpTo="@id/nav_graph" app:popUpToInclusive="false" />
+
+    <fragment android:id="@+id/historyFragment"
+        android:name="com.example.moneytracker.ui.history.HistoryFragment"
+        android:label="History" tools:layout="@layout/fragment_history" />
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.moneytracker.ui.auth.LoginFragment"
@@ -73,4 +86,7 @@
         android:label="Edit Transaction"
         tools:layout="@layout/fragment_edit_transaction" />
 
+<fragment android:id="@+id/budgetsFragment" android:name="com.example.moneytracker.ui.budgets.BudgetsFragment" android:label="Budgets" tools:layout="@layout/fragment_budgets" />
+<fragment android:id="@+id/assistantFragment" android:name="com.example.moneytracker.ui.assistant.AssistantFragment" android:label="AI assistant" tools:layout="@layout/fragment_assistant" />
+<fragment android:id="@+id/helpFragment" android:name="com.example.moneytracker.ui.help.HelpFragment" android:label="Help" tools:layout="@layout/fragment_help" />
 </navigation>

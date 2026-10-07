@@ -3,6 +3,7 @@ package com.example.moneytracker.ui.transaction
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
 import com.example.moneytracker.R
 import com.example.moneytracker.data.model.Transaction
 import com.example.moneytracker.databinding.ItemTransactionBinding
@@ -15,7 +16,8 @@ class TransactionAdapter(
         (Transaction) -> Unit,
 
     private val onEditClick:
-        (Transaction) -> Unit
+        (Transaction) -> Unit,
+    private val showActions: Boolean = true
 ) : RecyclerView.Adapter<
         TransactionAdapter.TransactionViewHolder>() {
 
@@ -28,10 +30,17 @@ class TransactionAdapter(
         List<Transaction>
     ) {
 
-        transactions =
-            newTransactions
-
-        notifyDataSetChanged()
+        val oldTransactions = transactions
+        val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize() = oldTransactions.size
+            override fun getNewListSize() = newTransactions.size
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                oldTransactions[oldItemPosition].id == newTransactions[newItemPosition].id
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                oldTransactions[oldItemPosition] == newTransactions[newItemPosition]
+        })
+        transactions = newTransactions.toList()
+        diff.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(
@@ -63,6 +72,10 @@ class TransactionAdapter(
         holder.bind(
             transactions[position]
         )
+        (holder.itemView.findViewById<android.view.View>(R.id.editButton).parent as android.view.View)
+            .visibility = if (showActions) android.view.View.VISIBLE else android.view.View.GONE
+        val transaction = transactions[position]
+        holder.itemView.setOnClickListener { onEditClick(transaction) }
     }
 
     override fun getItemCount():
@@ -110,9 +123,6 @@ class TransactionAdapter(
                     )
                 )
 
-            val amount =
-                transaction.amountCents / 100.0
-
             val prefix =
                 if (
                     transaction.type ==
@@ -124,8 +134,7 @@ class TransactionAdapter(
                 }
 
             binding.amountTextView.text =
-                "$prefix$%.2f"
-                    .format(amount)
+                prefix + Money.format(transaction.amountCents, transaction.currencyCode)
 
             val amountColor =
                 if (

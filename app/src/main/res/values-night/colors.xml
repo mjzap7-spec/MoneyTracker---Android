@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <color name="primary_blue">#668BFF</color>
+    <color name="primary_blue_dark">#4059D8</color>
+
+    <color name="screen_background">#0C1422</color>
+    <color name="card_background">#152033</color>
+    <color name="card_background_light">#1C2C45</color>
+
+    <color name="text_primary">#F5F7FA</color>
+    <color name="text_secondary">#A8AFBF</color>
+    <color name="text_muted">#9AA4B8</color>
+
+    <color name="income_green">#38D996</color>
+    <color name="expense_red">#FF6B81</color>
+    <color name="error_red">#FF6B6B</color>
+
+    <color name="white">#FFFFFF</color>
+
+    <color name="border_light">#2B303C</color>
+    <color name="border_dark">#343A48</color>
+
+    <color name="filter_background">#1B1F28</color>
+    <color name="filter_text">#A8AFBF</color>
+    <color name="filter_selected">#668BFF</color>
+
+    <color name="input_background">#152033</color>
+    <color name="input_stroke">#343A48</color>
+
+    <color name="icon_background">#242938</color>
+
+<color name="selected_tab_text">#0C1422</color></resources>
